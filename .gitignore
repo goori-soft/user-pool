@@ -1,3 +1,9 @@
+# Files
+files/
+public/
+.data/
+.secrets/
+
 # Logs
 logs
 *.log

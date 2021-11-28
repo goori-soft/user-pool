@@ -1,0 +1,1 @@
+module.exports = process.env.APP_TOKEN_HEADER_NAME || 'x-app-access-token'
