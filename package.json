@@ -4,6 +4,7 @@
   "description": "Node server for user pool service",
   "main": "index.js",
   "scripts": {
+    "dev": "npm run start:dev",
     "start:dev": "nodemon index.js",
     "start": "node index.js",
     "test": "node test.js"

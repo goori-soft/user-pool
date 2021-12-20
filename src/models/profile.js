@@ -8,7 +8,7 @@ const schema = new mongoose.Schema({
     description: {type: String, default: ''},
     type: {type: String, required: true, default: ProfileTypes.standart},
     meta: [{
-        key: {type: String, required: true, unique: true},
+        key: {type: String, required: true},
         value: {type: mongoose.SchemaTypes.Mixed, default: ""}
     }],
 

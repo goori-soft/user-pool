@@ -22,7 +22,7 @@ const schema = new mongoose.Schema({
     createdByApp: {type: mongoose.Types.ObjectId, required: false, ref: App},
 
     meta: [{
-        key: {type: String, required: true, unique: true},
+        key: {type: String, required: true},
         value: {type: mongoose.SchemaTypes.Mixed, default: ""}
     }]
 })

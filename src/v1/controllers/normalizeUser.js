@@ -1,11 +1,24 @@
-module.exports = (user)=>{
-    if(!user) return user
-    const removeFromUser =['__v', '_id', 'password', 'passwordHistory']
-    const removeFromApp = ['__v', '_id', 'id', 'key', 'password']
+const normalizeProfile = require('./normalizeProfile')
+const normalizeApp = require('./normalizeApp')
 
-    removeFromUser.map(prop => delete user[prop])
+module.exports = async (user)=>{
+    if(!user) return user
+    const app = await normalizeApp(user.createdByApp)
     
-    if(user.createdByApp) removeFromApp.map(prop => delete user.createdByApp[prop])
+    const profiles = []
+    if(user.profiles){
+        for (index in user.profiles){
+            profiles.push(await normalizeProfile(user.profiles[index]))
+        }
+    }
+
+    user = user.toObject()
+    user.profiles = profiles
+    user.createdByApp = app
+    
+    const removeFromUser =['__v', '_id', 'password', 'passwordHistory']
+    removeFromUser.map(prop => delete user[prop])
     if(user.meta) user.meta.map(item=> delete item._id)
+
     return user
 }

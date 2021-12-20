@@ -4,29 +4,31 @@ const getAppById = require('./getAppById')
 const saveUser = require('./saveUser')
 const debug = require('../../debug')
 
-module.exports = async (login, appId, profileName, callback=null)=>{
+module.exports = async (login, appId, profileName, callback = null)=>{
     let error = null
     let payload = null
-    
+
     if(login){
         let user = await getUser(login)
         if(user){
             const app = await getAppById(appId)
             if(app){
                 const profile = await getProfile(profileName, app)
+                console.log(profile._id)
                 if(profile){
-                    if(!user.profiles.includes(profile._id)){
-                        user.profiles.push(profile._id)
+                    if(user.profiles.includes(profile._id)){
+                        user = user.toObject()
+                        user.profiles = user.profiles.filter( profileId => profileId.toString() != profile._id.toString())
                         const r = await saveUser(user)
                         if(r){
-                            payload = profileName
+                            payload = user.profiles
                         }
                         else{
                             error = new Error(`Unable to save user. An error has occurred`)
                         }
                     }
                     else{
-                        payload = profileName
+                        payload = user.profiles
                     }
                 }
                 else{
@@ -46,7 +48,7 @@ module.exports = async (login, appId, profileName, callback=null)=>{
     }
 
 
-    if(typeof(callback) == 'function') callback(error, payload)
+    if (typeof(callback) == 'function') callback(error, payload)
 
     return payload
 }

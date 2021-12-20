@@ -46,6 +46,9 @@ router.post('/profile/create', createProfile)
 const attachProfile = require('./attachProfile')
 router.post('/profile/attach', attachProfile)
 
+const detachProfile = require('./detachProfile')
+router.post('/profile/detach', detachProfile)
+
 // final api requests
 const notFoundedRequest = require('./404')
 router.use(notFoundedRequest)
