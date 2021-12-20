@@ -20,6 +20,9 @@ app.use(bodyParser.urlencoded({limit: '10mb', extended: true}))
 app.use(bodyParser.json({ limit: '10mb', extended: true }))
 app.use(cors())
 
+const status = require('./src/status')
+app.get('/api/status', (req, res)=>{res.send(status)})
+
 // Configuração das rotas
 const routerV1 = require('./src/v1/routes')
 app.use('/api/v1', routerV1)
