@@ -5,6 +5,10 @@ router.post(masterAuthRoute, masterAuth)
 
 // api/v1/app
 const validateMasterToken = require('./validateMasterToken')
+
+const setConfig = require('./setConfig')
+router.post('config/set', validateMasterToken, setConfig)
+
 const createApp = require('./createApp')
 //router.use('/app', validateMasterToken)
 router.post('/app/create', validateMasterToken, createApp)

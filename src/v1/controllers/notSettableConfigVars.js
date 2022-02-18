@@ -1,0 +1,10 @@
+module.exports = [
+    "APP_AUTH_SECRET",
+    "DEBUG",
+
+    "MASTER_REQUIRES_AUTH",
+    "MASTER_PASSWORD",
+    "MASTER_PRIVATE_KEY",
+
+    "USER_AUTH_SECRET",
+]
