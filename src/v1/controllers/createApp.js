@@ -5,6 +5,7 @@ const validateAppName = require('./validateAppName')
 const evaluatePassword = require('./evaluatePassword')
 const encodePassword = require('./encodePassword')
 const generateRandomSecret = require('./generateRandomSecret')
+const {duplicateEmailError} = require('../errors/errors')
 
 module.exports = async (name, email, password, callback=null)=>{
     let error = null
@@ -48,7 +49,7 @@ module.exports = async (name, email, password, callback=null)=>{
             error = new Error(`Unable to create app in the database`)
             // verificar se a chave já está sendo utilizada
             const duplicated = await App.findOne({email: email})
-            if (duplicated) error = new Error(`Email is alrady in use`)
+            if (duplicated) error = duplicateEmailError
         }
     }
 

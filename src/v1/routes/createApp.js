@@ -1,4 +1,5 @@
 const createApp = require('../controllers/createApp')
+const {duplicateEmailError} = require('../errors/errors')
 
 module.exports = (req, res)=>{
     const name = req.body.name || ''
@@ -17,14 +18,14 @@ module.exports = (req, res)=>{
             res.send(response)
         }
         else{
+            let statusCode = 500
+            if (error == duplicateEmailError) statusCode = 400
             const response = {
                 status: 'fail',
                 errors: [error.message]
             }
-            res.status(500)
+            res.status(statusCode)
             res.send(response)
         }
     })
-
-    
 }

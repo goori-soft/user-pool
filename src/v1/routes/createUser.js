@@ -13,7 +13,7 @@ module.exports = async (req, res)=>{
         if(!error){
             const response = {
                 status: 'ok',
-                payload,
+                user: payload,
             }
 
             res.status(200)

@@ -7,7 +7,7 @@
     "dev": "npm run start:dev",
     "start:dev": "nodemon index.js",
     "start": "node index.js",
-    "test": "node test.js"
+    "test": "jest --watchAll --detectOpenHandles --runInBand --verbose"
   },
   "repository": {
     "type": "git",
@@ -31,7 +31,21 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.0.12",
-    "nodemon": "^2.0.15"
+    "mongoose": "^6.0.12"
+  },
+  "devDependencies": {
+    "jest": "^27.5.1",
+    "mockingoose": "^2.15.2",
+    "mongodb-memory-server": "^8.4.0",
+    "nodemon": "^2.0.15",
+    "supertest": "^6.2.2"
+  },
+  "jest": {
+    "bail": 5,
+    "modulePathIgnorePatterns": [
+      ".data",
+      "node_modules/",
+      "dev/"
+    ]
   }
 }

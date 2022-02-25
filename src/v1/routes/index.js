@@ -1,4 +1,5 @@
-const router = new require('express').Router()
+const {Router} = require('express')
+const router = new Router()
 const masterAuth = require('./masterAuth')
 const masterAuthRoute = process.env.MASTER_AUTH_ROUTE || '/master/auth'
 router.post(masterAuthRoute, masterAuth)
@@ -7,7 +8,10 @@ router.post(masterAuthRoute, masterAuth)
 const validateMasterToken = require('./validateMasterToken')
 
 const setConfig = require('./setConfig')
-router.post('config/set', validateMasterToken, setConfig)
+router.post('/config/set', validateMasterToken, setConfig)
+
+const getConfig = require('./getConfig')
+router.get('/config/:key', validateMasterToken, getConfig)
 
 const createApp = require('./createApp')
 //router.use('/app', validateMasterToken)

@@ -1,14 +1,15 @@
 const jwt = require('jsonwebtoken')
 const debug = require('../../debug')
+const generateRandonSecret = require('./generateRandomSecret')
 
 const masterPassword = process.env.MASTER_PASSWORD || ''
 const masterRequiresAuth = process.env.MASTER_REQUIRES_AUTH || true
-const masterPrivateKey = process.env.MASTER_PRIVATE_KEY || 'a'
+const masterPrivateKey = require('./getMasterPrivateKey')
 
 module.exports = (password, callback = null)=>{
     let token = null
     let error = null
-
+    
     if (!masterRequiresAuth || password === masterPassword){
         const payload = { 'function': 'master' }
         token = jwt.sign(payload, masterPrivateKey)

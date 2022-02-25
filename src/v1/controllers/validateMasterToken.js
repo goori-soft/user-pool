@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 const debug = require('../../debug')
 
-const masterPrivateKey = process.env.MASTER_PRIVATE_KEY || 'a'
+const masterPrivateKey = require('./getMasterPrivateKey')
 
 module.exports = (token, callback = null)=>{
     let decoded = null

@@ -1,1 +1,1 @@
-module.exports = (req)=> req.app
+module.exports = (req)=> req?.app
