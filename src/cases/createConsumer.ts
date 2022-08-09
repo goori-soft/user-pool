@@ -1,0 +1,1 @@
+import { fabricateConsumer } from "@/entities/consumer";
