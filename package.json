@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "rm -rf dist && tsc && tsc-alias",
-    "start": "npm run build && node dist/index.js",
+    "start": "npm run build && node dist/server/index.js",
     "test": "npm run test:unit && npm run test:integration",
     "test:integration": "jest --runInBand ./tests/integration/*",
     "test:integration:watch": "jest --watch --runInBand ./tests/integration/*",
@@ -32,9 +32,11 @@
     "tsc-alias": "^1.6.11"
   },
   "dependencies": {
+    "@types/uuid": "^8.3.4",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.5.1"
+    "mongoose": "^6.5.1",
+    "uuid": "^8.3.2"
   }
 }

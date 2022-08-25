@@ -1,5 +1,5 @@
 import request from 'supertest'
-import app from '@/app'
+import app from '@/server/app'
 
 describe("Master POST endpoints", ()=>{
     const authEndPoint = '/api/v1/master/auth'

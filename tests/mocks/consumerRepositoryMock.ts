@@ -1,4 +1,4 @@
-import { IConsumerRepository } from "@/entities/interfaces/IConsumerRepository"
+import { IConsumerRepository } from "@/userPool/entities/interfaces/IConsumerRepository"
 
 export const ConsumerDBMemory: {id: string}[] = []
 

@@ -16,7 +16,7 @@ Requisição:
 
 ```ts
 {
-    masterAcessKey: string // Chave de acesso master definida em variável de ambiente
+  masterAcessKey: string; // Chave de acesso master definida em variável de ambiente
 }
 ```
 
@@ -56,6 +56,36 @@ Resposta:
 {
     consumerId: string, // Id único do consumidor
     acessKey: string // Chave de acesso. Não poderá ser recuperada posteriormente
+}
+```
+
+## GET /api/v1/master/consumers
+
+Headers:
+
+```json
+ x-master-access-token: string //JSON Web Token de autenticação retornado pela rota `/api/v1/master/auth`
+```
+
+Resposta:
+
+```ts
+{
+    total: number, // número total de consumidores registrados
+    active: number, // número de consumidores ativos
+    inactive: number, // número de consumidores inativos
+    consumers: [
+        {
+            id: string,
+            name: string,
+            email: string,
+            origin: [string],
+            users: number, // total de usuários registrados por esse consumidor
+            userMaxNumber: number,
+            groups: number, // total de grupos registrados por esse consumidor
+            groupMaxNumber: number,
+        }
+    ]
 }
 ```
 

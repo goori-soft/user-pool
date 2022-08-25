@@ -1,4 +1,4 @@
-import master from '@/entities/master'
+import master from '@/userPool/entities/Master'
 
 const sender = {
   send: (payload: any)=>{}
