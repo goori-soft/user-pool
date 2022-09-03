@@ -2,11 +2,7 @@ import userPool, { IConsumerInputPayload, IConsumerFactory } from "@/userPool"
 import { ConsumerMemoryFactory } from '@/factories'
 
 describe("Use case Register Consumer", ()=>{
-  let consumerMemoryFactory: IConsumerFactory
-
-  beforeAll(()=>{
-    consumerMemoryFactory = new ConsumerMemoryFactory()
-  })
+  const consumerFactory = new ConsumerMemoryFactory()
 
   it("Should create a consumer in memory", async ()=>{
     
@@ -18,7 +14,7 @@ describe("Use case Register Consumer", ()=>{
       groupMaxNumber: 0
     }
 
-    const consumerAuthKeys = await userPool.registerConsumer(consumerInputPayload, consumerMemoryFactory)
+    const consumerAuthKeys = await userPool.registerConsumer(consumerInputPayload, {consumerFactory})
 
     expect(consumerAuthKeys).toMatchObject({
       consumerId: expect.anything(),

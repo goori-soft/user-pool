@@ -114,7 +114,36 @@ Resposta:
 
 Grupos são entidades que permitem a organização de usuários e perfis. Antes de iniciar a criação do pool de usuários é preciso que o consumidor declare um grupo padrão. Todos os usuários criados pelo consumidor serão vinculados a este grupo padrão. Outros grupos podem ser criados pelo consumidor desde que não excedam o número máximo de grupos permitidos. O número máximo de grupos é declarado no momento do registro de um novo consumidor
 
-## POST /api/v1/register/group
+## POST /api/v1/group/register
+
+Headers:
+
+```json
+ x-consumer-access-token: string //JSON Web Token de autenticação retornado pela rota `/api/v1/consumer/auth`
+```
+
+Requisição:
+
+```ts
+{
+    name: string,
+    description?: string,
+    userMaxNumber: number,
+    meta?: [
+        {key: string, value?: number | string}
+    ]
+}
+```
+
+Resposta:
+
+```ts
+{
+    groupId: string,
+    message: string,
+    errors: [string]
+}
+```
 
 ## POST /api/v1/register/profile
 

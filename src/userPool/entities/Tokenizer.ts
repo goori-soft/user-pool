@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import { WebError } from './WebError';
 
 export type TokenizerPayload = { [key: string | number]: any }
 
@@ -14,7 +15,17 @@ export class Tokenizer{
       return payload;
     }
     catch(e: any){
-      throw new Error(`Unable to verify token, invalid token`);
+      throw new WebError(`Unable to verify token, invalid token`, 401);
+    }
+  }
+
+  decode(token: string): any {
+    try{
+      const payload = jwt.decode(token)
+      return payload
+    }
+    catch(e: any){
+      throw new WebError(`Unable to decode token, invalid token format`, 400)
     }
   }
 }

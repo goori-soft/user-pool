@@ -1,4 +1,4 @@
-import { Consumer } from "../Consumer"
+import { Consumer } from "../entities/Consumer"
 import { IConsumerSecrets } from "./IConsumerSecrets"
 
 export interface IConsumerRepository{

@@ -1,11 +1,10 @@
-import { IConsumerData, IConsumerInputPayload } from "./interfaces";
+import { IConsumerData, IConsumerInputPayload, IConsumerSecrets} from "../interfaces";
 import { AccessKey } from './AccessKey'
 import { Email } from "./Email";
 import { Origin } from "./Origin";
 import { TextInput } from "./TextInput";
 import { WebError } from "./WebError";
 import { Tokenizer } from "./Tokenizer";
-import { IConsumerSecrets } from "./interfaces/IConsumerSecrets";
 
 export class Consumer{
   private accessKey: AccessKey | undefined
@@ -78,6 +77,16 @@ export class Consumer{
     this.id = new TextInput(secrets.id).notBlanck()
     this.secret = new TextInput(secrets.secret).notBlanck()
     this.accessKey = secrets.accessKey
+  }
+
+  verify(token: string): boolean{
+    try{
+      const payload = this.tokenizer.verify(token, this.secret?.getValue() || '')
+      return true
+    }
+    catch(e: any){
+      return false
+    }
   }
 
   private isInitialized(): boolean{

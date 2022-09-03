@@ -8,7 +8,7 @@ describe("Use case get consumers stas", ()=>{
     consumerFactory = new ConsumerMemoryFactory()
   })
   it("Should get a empty list of consumers", async ()=>{
-    const consumersStats = await userPool.getConsumersStats(consumerFactory)
+    const consumersStats = await userPool.getConsumersStats({consumerFactory})
     const expectedResponseStructure = {
       total: expect.any(Number),
       active: expect.any(Number),
@@ -33,7 +33,7 @@ describe("Use case get consumers stas", ()=>{
     const consumerRepository = consumerFactory.createRepository()
     await consumerRepository.save(consumer)
 
-    const consumersStats = await userPool.getConsumersStats(consumerFactory)
+    const consumersStats = await userPool.getConsumersStats({consumerFactory})
     expect(consumersStats.total).toBe(1)
     expect(consumersStats.active).toBe(1)
     expect(consumersStats.inactive).toBe(0)

@@ -155,4 +155,38 @@ describe("Consumer entity", ()=>{
     expect(()=> consumer.auth(validAcessKeyArray[0])).toThrow()
   })
 
+
+  it("Should validate a token", ()=>{
+    const validPayload = {
+      name: 'myApp',
+      email: 'mayApp@mayapp.com',
+      origin: ['myapp.com', '*'],
+      userMaxNumber: 0,
+      groupMaxNumber: 0,
+    }
+    const consumer = new Consumer(validPayload)
+    consumer.setSecrets(validSecrets)
+    const token = consumer.auth(validAcessKeyArray[0])
+
+    const validate = consumer.verify(token)
+
+    expect(validate).toBe(true)
+  })
+
+  it("Should not validate a token", ()=>{
+    const validPayload = {
+      name: 'myApp',
+      email: 'mayApp@mayapp.com',
+      origin: ['myapp.com', '*'],
+      userMaxNumber: 0,
+      groupMaxNumber: 0,
+    }
+    const consumer = new Consumer(validPayload)
+    consumer.setSecrets(validSecrets)
+    const token = ''
+
+    const validate = consumer.verify(token)
+
+    expect(validate).toBe(false)
+  })
 })

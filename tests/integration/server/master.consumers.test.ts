@@ -1,6 +1,6 @@
 import request from 'supertest'
 import app from '@/server/app'
-import { validMasterAccessToken, invalidMasterAccessToken } from '../mocks/masterAccessToken'
+import { validMasterAccessToken, invalidMasterAccessToken } from '../../mocks/masterAccessToken'
 
 describe("Master list consumers: GET /api/v1/master/consumers", ()=>{
     const authEndPoint = '/api/v1/master/consumers'

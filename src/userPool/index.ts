@@ -1,5 +1,5 @@
 export * from './entities'
-export * from './entities/interfaces'
+export * from './interfaces'
 import * as uses from './uses'
 
 export default {

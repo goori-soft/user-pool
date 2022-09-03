@@ -36,6 +36,7 @@ export class Master {
     }
 }
 
-const masterAccessKey = process.env.MASTER_ACCESS_KEY || ''
-const masterSecret = process.env.MASTER_SECRET || 'bananas'
-export const master = new Master(masterAccessKey, masterSecret)
+export enum MasterPropNames {
+    masterAccessKey = 'MASTER_ACCESS_KEY',
+    masterSecret = 'MASTER_SECRET'
+}

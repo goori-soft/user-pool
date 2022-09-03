@@ -1,8 +1,12 @@
-import { IConsumerAuthKeys, IConsumerFactory } from "../entities/interfaces";
+import { IConsumerAuthKeys, IConsumerFactory } from "../interfaces";
 import { WebError } from "../entities/WebError";
 
-export default async function authConsumer(consumerAuthKeys: IConsumerAuthKeys, consumerFactory: IConsumerFactory): Promise<string>{
-  const consumerRepository = consumerFactory.createRepository()
+type authConsumerOptions = {
+  consumerFactory: IConsumerFactory
+}
+
+export default async function authConsumer(consumerAuthKeys: IConsumerAuthKeys, options: authConsumerOptions): Promise<string>{
+  const consumerRepository = options.consumerFactory.createRepository()
   try{
     const consumer = await consumerRepository.findById(consumerAuthKeys.consumerId)
     const token = consumer.auth(consumerAuthKeys.accessKey)

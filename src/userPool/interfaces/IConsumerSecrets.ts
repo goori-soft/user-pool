@@ -1,4 +1,4 @@
-import { AccessKey } from "../AccessKey"
+import { AccessKey } from "../entities/AccessKey"
 
 export interface IConsumerSecrets {
   id: string

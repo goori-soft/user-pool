@@ -1,7 +1,6 @@
 import { IConsumerRepository, Consumer } from "@/userPool";
 import { AccessKey } from "@/userPool";
-import { Email } from "@/userPool/entities/Email";
-import { IConsumerSecrets } from "@/userPool/entities/interfaces/IConsumerSecrets";
+import { IConsumerSecrets } from "@/userPool/interfaces/IConsumerSecrets";
 import { WebError } from "@/userPool/entities/WebError";
 import { v4 as uuid }  from 'uuid'
 

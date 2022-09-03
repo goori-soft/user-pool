@@ -10,7 +10,7 @@ router.post("/auth", async (req, res): Promise<void>=>{
     const {masterAccessKey} = req.body
     
     try{
-        const token = userPool.authMaster(masterAccessKey)
+        const token = await userPool.authMaster(masterAccessKey)
         res.status(200).send({
             token,
             message: 'Master user authenticated'
@@ -30,7 +30,7 @@ router.post("/consumer/register", masterVerifyMiddleware, async (req, res)=>{
     const consumerPayload: IConsumerInputPayload = {name, email, origin, userMaxNumber, groupMaxNumber}
 
     try{
-        const consumerAuthKeys: IConsumerAuthKeys = await userPool.registerConsumer(consumerPayload, consumerFactory)
+        const consumerAuthKeys: IConsumerAuthKeys = await userPool.registerConsumer(consumerPayload, {consumerFactory})
         res.status(200).send({
             ... consumerAuthKeys,
             message: `Consumer has been created`
@@ -47,7 +47,7 @@ router.post("/consumer/register", masterVerifyMiddleware, async (req, res)=>{
 
 router.get("/consumers", masterVerifyMiddleware, async (req, res)=>{
     try{
-        const consumersStats = await userPool.getConsumersStats(consumerFactory)
+        const consumersStats = await userPool.getConsumersStats({consumerFactory})
         res.status(200).send(consumersStats)
     }
     catch(e: any){

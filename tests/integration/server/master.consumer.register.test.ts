@@ -1,6 +1,6 @@
 import request from 'supertest'
 import app from '@/server/app'
-import { validMasterAccessToken, invalidMasterAccessToken } from '../mocks/masterAccessToken'
+import { validMasterAccessToken, invalidMasterAccessToken } from '../../mocks/masterAccessToken'
 
 describe("Consumer register: POST master/consumer/register", ()=>{
   const validHeaders = {'x-master-access-token': validMasterAccessToken}

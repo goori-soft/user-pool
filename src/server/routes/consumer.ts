@@ -10,7 +10,7 @@ router.post('/auth', async (req, res)=>{
   const consumerFactory = new ConsumerMongoFactory()
 
   try{
-    const token = await userPool.authConsumer(consumerAuthKeys, consumerFactory)
+    const token = await userPool.authConsumer(consumerAuthKeys, {consumerFactory})
     res.status(200).send({
       token,
       message: 'Consumer is authenticated'

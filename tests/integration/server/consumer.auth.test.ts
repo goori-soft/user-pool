@@ -19,11 +19,12 @@ describe("Consumer auth: POST consumer/auth", ()=>{
   }
 
   beforeAll(async ()=>{
-    const consumerMemoryFactory = new ConsumerMemoryFactory()
-    const consumerAuthKeys = await userPool.registerConsumer(consumerPayload, consumerMemoryFactory)
+    const consumerFactory = new ConsumerMemoryFactory()
+    const consumerAuthKeys = await userPool.registerConsumer(consumerPayload, {consumerFactory})
     validPayload.consumerId = consumerAuthKeys.consumerId
     validPayload.accessKey = consumerAuthKeys.accessKey
   })
+  
   it("Should auth the consumer", async ()=>{
     const response = await request(app)
       .post(authCostumerEndPoint)
