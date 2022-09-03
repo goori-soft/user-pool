@@ -9,6 +9,11 @@ describe("Consumer auth: POST consumer/auth", ()=>{
     consumerId: '',
     accessKey: ''
   }
+
+  const invalidPayload = {
+    consumerId: '',
+    accessKey: ''
+  }
   
   const consumerPayload = {
     name: 'My App',
@@ -33,5 +38,15 @@ describe("Consumer auth: POST consumer/auth", ()=>{
 
     expect(response.statusCode).toBe(200)
     expect(typeof response.body?.token).toBe('string')
+  })
+
+  it("Should not auth the consumer", async ()=>{
+    const response = await request(app)
+      .post(authCostumerEndPoint)
+      .set(validHeaders)
+      .send(invalidPayload)
+
+    expect(response.statusCode).toBe(401)
+    expect(typeof response.body?.token).toBe('undefined')
   })
 })

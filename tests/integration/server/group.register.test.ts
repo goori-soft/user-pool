@@ -44,6 +44,25 @@ describe("Group register: POST api/v1/group/register", ()=>{
     expect(typeof response.body?.groupId).toBe('string')
   })
 
+  it("Should not create a new group with invalid name", async ()=>{
+    const groupInputPayload = {
+      name: '',
+      description: 'This is just a group for testing',
+      userMaxNumber: '1',
+      meta: [
+        {key: 'type', value: 'soccer'}
+      ]
+    }
+
+    const response = await request(app)
+      .post(registerGroupEndPoint)
+      .set(validHeaders)
+      .send(groupInputPayload)
+
+    expect(response.statusCode).toBe(400)
+    expect(typeof response.body?.groupId).toBe('undefined')
+  })
+
   it("Should not create a new group for a invalid consumer", async ()=>{
     const groupInputPayload = {
       name: 'myGroup',

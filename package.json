@@ -11,7 +11,8 @@
     "test:integration": "jest --runInBand ./tests/integration/*",
     "test:integration:watch": "jest --watch --runInBand ./tests/integration/*",
     "test:unit": "jest ./tests/unit/*",
-    "test:unit:watch": "jest --watch ./tests/unit/*"
+    "test:unit:watch": "jest --watch ./tests/unit/*",
+    "test:coverage": "jest --runInBand ./test/* --coverage"
   },
   "keywords": [
     "user-pool",

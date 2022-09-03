@@ -1,3 +1,4 @@
+export * from './IMainFactory'
 export * from './IConsumerInputPayload'
 export * from './IConsumerRepository'
 export * from './IConsumerFactory'

@@ -7,7 +7,7 @@ export class MockConfigurationRepository implements IConfigurationRepository{
   }
 
   async get(propName: string) {
-    return this.config[propName] || ''
+    return this.config[propName] as string
   }
 
   async set(propName: string, propValue: any): Promise<void> {
