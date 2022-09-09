@@ -189,4 +189,28 @@ describe("Consumer entity", ()=>{
 
     expect(validate).toBe(false)
   })
+
+  it("Props must be immutable", ()=>{
+    const consumerInputPayload = {
+      name: 'myApp',
+      email: 'mayapp@mayapp.com',
+      origin: ['myapp.com', '*'],
+      userMaxNumber: 1,
+      groupMaxNumber: 1,
+    }
+
+    const consumer = new Consumer(consumerInputPayload)
+    consumerInputPayload.name = 'newApp'
+    consumerInputPayload.email = 'newapp@newapp.com'
+    consumerInputPayload.origin[0] = '*'
+    consumerInputPayload.userMaxNumber = 2
+    consumerInputPayload.groupMaxNumber = 2
+
+    const consumerData = consumer.getData()
+    expect(consumerData.name).not.toBe(consumerInputPayload.name)
+    expect(consumerData.email).not.toBe(consumerInputPayload.email)
+    expect(consumerData.origin[0]).not.toBe(consumerInputPayload.origin[0])
+    expect(consumerData.userMaxNumber).not.toBe(consumerInputPayload.userMaxNumber)
+    expect(consumerData.groupMaxNumber).not.toBe(consumerInputPayload.groupMaxNumber)
+  })
 })

@@ -8,6 +8,7 @@ This project is simple user pool service.
 
 - [Conceitos](./Concepts.md)
 - [APIs](./APIs.md)
+- [Eventos](./Events.md)
 
 # How does it work?
 

@@ -12,7 +12,7 @@ type GroupDataRecord = {
 const groupMemoryDatabase: GroupDataRecord[] = []
 
 export class GroupMemoryRepository implements IGroupRepository{
-  async save(group: Group): Promise<string>{
+  async insert(group: Group): Promise<string>{
     const id = uuid()
     const groupDataRecord: GroupDataRecord = {
       id,
@@ -22,5 +22,14 @@ export class GroupMemoryRepository implements IGroupRepository{
     groupMemoryDatabase.push(groupDataRecord)
 
     return id
+  }
+
+  async getById(groupId: string, consumerId: string): Promise<Group | undefined> {
+    const groupDataRecord = groupMemoryDatabase.find(groupDataRecord =>{
+      return groupDataRecord.id === groupId && groupDataRecord.consumerId === consumerId
+    })
+    if(!groupDataRecord) return undefined
+    const group = new Group(groupDataRecord, groupDataRecord.consumerId)
+    return group
   }
 }

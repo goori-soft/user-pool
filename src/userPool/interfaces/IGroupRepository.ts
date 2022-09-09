@@ -1,5 +1,6 @@
 import { Group } from "../entities/Group";
 
 export interface IGroupRepository{
-  save(group: Group): Promise<string>
+  insert(group: Group): Promise<string>
+  getById(groupId: string, consumerId: string): Promise<Group | undefined>
 }

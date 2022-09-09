@@ -1,10 +1,11 @@
 import {Router} from 'express'
 import masterVerifyMiddleware from './master.verify.middleware'
-import userPool, { IConsumerInputPayload, IConsumerAuthKeys, IMainFactory } from '@/userPool'
+import userPool, { IMainFactory } from '@/userPool'
+import { ConsumerInputPayload, ConsumerAuthKeys } from '@/userPool/types'
 
 export default function(mainFactory: IMainFactory): Router{
     const router = Router()
-    const consumerFactory = mainFactory.createConsumerFactory()
+    const consumerRepository = mainFactory.createConsumerRepository()
 
     router.post("/auth", async (req, res): Promise<void>=>{
         const {masterAccessKey} = req.body
@@ -26,11 +27,11 @@ export default function(mainFactory: IMainFactory): Router{
     })
 
     router.post("/consumer/register", masterVerifyMiddleware(mainFactory), async (req, res)=>{
-        const {name, email, origin, userMaxNumber, groupMaxNumber} = req.body as IConsumerInputPayload
-        const consumerPayload: IConsumerInputPayload = {name, email, origin, userMaxNumber, groupMaxNumber}
+        const {name, email, origin, userMaxNumber, groupMaxNumber} = req.body as ConsumerInputPayload
+        const consumerPayload: ConsumerInputPayload = {name, email, origin, userMaxNumber, groupMaxNumber}
 
         try{
-            const consumerAuthKeys: IConsumerAuthKeys = await userPool.registerConsumer(consumerPayload, {consumerFactory})
+            const consumerAuthKeys: ConsumerAuthKeys = await userPool.registerConsumer(consumerPayload, {consumerRepository})
             res.status(200).send({
                 ... consumerAuthKeys,
                 message: `Consumer has been created`
@@ -47,7 +48,7 @@ export default function(mainFactory: IMainFactory): Router{
 
     router.get("/consumers", masterVerifyMiddleware(mainFactory), async (req, res)=>{
         try{
-            const consumersStats = await userPool.getConsumersStats({consumerFactory})
+            const consumersStats = await userPool.getConsumersStats({consumerRepository})
             res.status(200).send(consumersStats)
         }
         catch(e: any){

@@ -4,13 +4,13 @@ import {Router} from 'express'
 export default function(mainFactory: IMainFactory): Router{
 
   const router = Router()
-  const consumerFactory = mainFactory.createConsumerFactory()
+  const consumerRepository = mainFactory.createConsumerRepository()
 
   router.post('/auth', async (req, res)=>{
     const { consumerId, accessKey } = req.body
     const consumerAuthKeys = { consumerId, accessKey }
     try{
-      const token = await userPool.authConsumer(consumerAuthKeys, {consumerFactory})
+      const token = await userPool.authConsumer(consumerAuthKeys, {consumerRepository})
       res.status(200).send({
         token,
         message: 'Consumer is authenticated'

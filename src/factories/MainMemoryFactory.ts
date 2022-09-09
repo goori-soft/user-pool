@@ -1,15 +1,21 @@
-import { IConsumerFactory, IGroupFactory, IMainFactory } from "@/userPool";
-import { ConsumerMemoryFactory } from "./ConsumerMemoryFactory";
-import { GroupMemoryFactory } from "./GroupMemoryFactory";
+import { ConsumerMemoryRepository, GroupMemoryRepository, PolicyMemoryRepository, ProfileMemoryRepository } from "@/adapters";
+import { UserMemoryRepository } from "@/adapters/UseremoryRepository";
+import { IConsumerRepository, IGroupRepository, IMainFactory, IPolicyRepository, IProfileRepository, IUserRepository } from "@/userPool";
 
 export class MainMemoryFactory implements IMainFactory{
-  
-  createConsumerFactory(): IConsumerFactory {
-    return new ConsumerMemoryFactory()
+  createConsumerRepository(): IConsumerRepository {
+    return new ConsumerMemoryRepository()
   }
-
-  createGroupFactory(): IGroupFactory {
-    return new GroupMemoryFactory()
+  createGroupRepository(): IGroupRepository {
+    return new GroupMemoryRepository()
   }
-  
+  createPolicyRepository(): IPolicyRepository {
+    return new PolicyMemoryRepository()
+  }
+  createProfileRepository(): IProfileRepository {
+    return new ProfileMemoryRepository()
+  }
+  createUserRepository(): IUserRepository {
+    return new UserMemoryRepository()
+  }
 }

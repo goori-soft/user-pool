@@ -1,7 +1,7 @@
 import request from 'supertest'
 import app from '@/server/app'
 import {consumerInputPayload} from '../../mocks/consumerInputPayload'
-import { ConsumerMongoFactory } from '@/factories'
+import { MainMemoryFactory } from '@/factories'
 import { Consumer } from '@/userPool'
 import userPool from '@/userPool'
 describe("Group register: POST api/v1/group/register", ()=>{
@@ -12,15 +12,15 @@ describe("Group register: POST api/v1/group/register", ()=>{
   const registerGroupEndPoint = '/api/v1/group/register'
 
   beforeAll( async ()=>{
-    const consumerFactory = new ConsumerMongoFactory()
-    const consumerRepository = consumerFactory.createRepository()
+    const mainFactory = new MainMemoryFactory()
+    const consumerRepository = mainFactory.createConsumerRepository()
     const consumer = new Consumer(consumerInputPayload)
-    const consumerSecrets = await consumerRepository.save(consumer)
+    const consumerSecrets = await consumerRepository.insert(consumer)
 
     const xConsumerAccessToken = await userPool.authConsumer({
       consumerId: consumerSecrets.id,
       accessKey: consumerSecrets.accessKey.getValue()
-    }, { consumerFactory })
+    }, { consumerRepository })
 
     validHeaders['x-consumer-access-token'] = xConsumerAccessToken
   })

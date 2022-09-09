@@ -145,6 +145,92 @@ Resposta:
 }
 ```
 
-## POST /api/v1/register/profile
+## POST /api/v1/policy/register
 
-## POST /api/v1/register/user
+Headers:
+
+```json
+ x-consumer-access-token: string //JSON Web Token de autenticação retornado pela rota `/api/v1/consumer/auth`
+```
+
+Requisição:
+
+```ts
+{
+    identifier: string, // uniq string identifier in consumer scope, no spaces or special chars here. ex: edit, editClients, deleteOwnClient
+    name: string,
+    description?: string
+}
+```
+
+Resposta:
+
+```ts
+{
+    policyId: string, // uniq id, diferente than identifier
+    message: string,
+    errors: [string]
+}
+```
+
+## POST /api/v1/profile/register
+
+Headers:
+
+```json
+ x-consumer-access-token: string //JSON Web Token de autenticação retornado pela rota `/api/v1/consumer/auth`
+```
+
+Requisição:
+
+```ts
+{
+    name: string,
+    description?: string,
+    userMaxNumber: number,
+    meta: [
+        {key: string, value?: number | string}
+    ],
+    groupId: string,
+    policies: [policyIdentifier] // an array of valid policies indentifiers string
+}
+```
+
+Resposta:
+
+```ts
+{
+    profileId: string,
+    message: string,
+    errors: [string]
+}
+```
+
+## POST /api/v1/user/register
+
+Headers:
+
+```json
+ x-consumer-access-token: string //JSON Web Token de autenticação retornado pela rota `/api/v1/consumer/auth`
+```
+
+Requisição:
+
+```ts
+{
+    name: string,
+    email: string,
+    password?: string,
+    meta?: [
+        {key: string, value?: string}
+    ]
+}
+```
+
+Resposta:
+
+```ts
+{
+  userId: string;
+}
+```

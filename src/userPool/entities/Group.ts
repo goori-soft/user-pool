@@ -1,26 +1,31 @@
-import { IGroupInputPayload } from "../interfaces";
 import { TextInput } from './TextInput'
 import { NumberInput } from "./NumberInput";
-import { IGroupData } from "../interfaces/IGroupData";
+import { GroupInputPayload, GroupData } from "../types";
+import { MetaDataInput } from './MetaDataInput';
 
 export class Group{
   name: TextInput
   description: TextInput
   userMaxNumber: NumberInput
+  consumerId: TextInput
+  metaData: MetaDataInput
 
-  constructor(private payload: IGroupInputPayload, private consumerId: string){
+  constructor(payload: GroupInputPayload, consumerId: string){
     this.name = new TextInput(payload.name).notBlanck()
     this.description = new TextInput(payload.description || '')
     this.userMaxNumber = new NumberInput(payload.userMaxNumber).positive()
+    this.metaData = new MetaDataInput(payload.meta || [])
+
+    this.consumerId = new TextInput(consumerId).notBlanck()
   }
 
-  getData(): IGroupData{
+  getData(): GroupData{
     return {
       name: this.name.getValue(),
       description: this.description.getValue(),
       userMaxNumber: this.userMaxNumber.getValue(),
-      meta: this.payload.meta || [],
-      consumerId: this.consumerId
+      meta: this.metaData.getData(),
+      consumerId: this.consumerId.getValue()
     }
   }
 }

@@ -5,6 +5,9 @@ import authConsumer from "./authConsumer";
 import getConsumersStats from "./getConsumersStats";
 import registerGroup from "./registerGroup";
 import validateConsumerToken from "./validateConsumerToken";
+import registerPolicy from "./registerPolicy";
+import registerProfile from "./registerProfile";
+import registerUser from "./registerUser";
 
 export {
   authMaster,
@@ -13,5 +16,8 @@ export {
   authConsumer,
   getConsumersStats,
   registerGroup,
-  validateConsumerToken
+  validateConsumerToken,
+  registerPolicy,
+  registerProfile,
+  registerUser
 }

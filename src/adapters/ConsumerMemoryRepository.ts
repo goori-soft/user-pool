@@ -1,6 +1,6 @@
 import { IConsumerRepository, Consumer } from "@/userPool";
 import { AccessKey } from "@/userPool";
-import { IConsumerSecrets } from "@/userPool/interfaces/IConsumerSecrets";
+import { ConsumerSecrets } from "@/userPool/types";
 import { WebError } from "@/userPool/entities/WebError";
 import { v4 as uuid }  from 'uuid'
 
@@ -18,9 +18,9 @@ type ConsumerDataRecord  = {
 const consumerMemoryDatabase: ConsumerDataRecord[] = []
 
 export class ConsumerMemoryRepository implements IConsumerRepository{
-  async save(consumer: Consumer): Promise<IConsumerSecrets>{
+  async insert(consumer: Consumer): Promise<ConsumerSecrets>{
     
-    const secrets: IConsumerSecrets = {
+    const secrets: ConsumerSecrets = {
       id: uuid(),
       accessKey:AccessKey.generateAccessKey(),
       secret: uuid()
@@ -33,7 +33,6 @@ export class ConsumerMemoryRepository implements IConsumerRepository{
       ... consumer.getData()
     }
 
-    if(await this.emailExists(consumerDataRecord.email)) throw new WebError(`This email is already registered`, 406)
     consumerMemoryDatabase.push(consumerDataRecord)
 
     return secrets
@@ -54,12 +53,6 @@ export class ConsumerMemoryRepository implements IConsumerRepository{
     return consumers
   }
 
-  private async emailExists(email: string): Promise<boolean>{
-    const consumers = await this.findByEmail(email)
-    if (consumers.length > 0) return true
-    return false
-  }
-
   async findById(id: string): Promise<Consumer>{
     const consumerDataRecord = consumerMemoryDatabase.find( dataRecord => dataRecord.id === id)
     if(consumerDataRecord === undefined) throw new WebError(`Consumer not found`, 404)
@@ -68,7 +61,7 @@ export class ConsumerMemoryRepository implements IConsumerRepository{
 
   private generateConsumerByDataRecord(dataRecord: ConsumerDataRecord): Consumer{
     const consumer = new Consumer({...dataRecord})
-    const secrets: IConsumerSecrets = {
+    const secrets: ConsumerSecrets = {
       id: dataRecord.id,
       secret: dataRecord.secret,
       accessKey: new AccessKey(dataRecord.accesskey)

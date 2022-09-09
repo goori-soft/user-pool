@@ -1,13 +1,14 @@
 import { Group } from "../entities";
-import { IGroupFactory, IGroupInputPayload, IGroupOutPutPayload } from "../interfaces";
+import { IGroupRepository } from "../interfaces";
+import { GroupInputPayload, GroupOutPutPayload } from '../types'
 
-type registerOptions = {
-  groupFactory: IGroupFactory
+type RegisterOptions = {
+  groupRepository: IGroupRepository
 }
 
-export default async function registerGroup(groupInputPayload: IGroupInputPayload, consumerId: string, options: registerOptions): Promise<IGroupOutPutPayload> {
-  const groupRepository = options.groupFactory.createRepository()
+export default async function registerGroup(groupInputPayload: GroupInputPayload, consumerId: string, options: RegisterOptions): Promise<GroupOutPutPayload> {
+  const groupRepository = options.groupRepository
   const group = new Group(groupInputPayload, consumerId)
-  const id = await groupRepository.save(group)
-  return { id }
+  const groupId = await groupRepository.insert(group)
+  return { groupId }
 }

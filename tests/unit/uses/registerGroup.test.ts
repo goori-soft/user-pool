@@ -1,38 +1,38 @@
-import { ConsumerMemoryFactory } from '@/factories'
-import { GroupMemoryFactory } from '@/factories/GroupMemoryFactory'
-import userPool, { IConsumerAuthKeys } from '@/userPool'
-import { IGroupInputPayload } from '@/userPool/interfaces/IGroupInputPayload'
+import { MainMemoryFactory } from '@/factories'
+import userPool from '@/userPool'
+import { GroupInputPayload, ConsumerAuthKeys } from '@/userPool/types'
 import { consumerInputPayload } from '../../mocks/consumerInputPayload'
 
 describe("use case Register Group", ()=>{
-  let consumerAuthKeys: IConsumerAuthKeys
-  const groupFactory = new GroupMemoryFactory()
-  const consumerFactory = new ConsumerMemoryFactory()
+  let consumerAuthKeys: ConsumerAuthKeys
+  const mainFactory = new MainMemoryFactory()
+  const consumerRepository = mainFactory.createConsumerRepository()
+  const groupRepository = mainFactory.createGroupRepository()
 
   beforeAll(async ()=>{  
-    consumerAuthKeys = await userPool.registerConsumer(consumerInputPayload, {consumerFactory})
+    consumerAuthKeys = await userPool.registerConsumer(consumerInputPayload, { consumerRepository })
   })
 
   it("Should create a new group", async ()=>{
-    const groupInputPayload: IGroupInputPayload = {
+    const groupInputPayload: GroupInputPayload = {
       name: 'myGroup',
       description: 'Group for testing',
       userMaxNumber: 1
     }
 
-    const groupOutPutPayload = await userPool.registerGroup(groupInputPayload, consumerAuthKeys.consumerId, {groupFactory})
-    expect(groupOutPutPayload).toMatchObject({id: expect.anything()})
+    const groupOutPutPayload = await userPool.registerGroup(groupInputPayload, consumerAuthKeys.consumerId, {groupRepository})
+    expect(groupOutPutPayload).toMatchObject({groupId: expect.anything()})
   })
 
   it("Should not register a group with out a name", async ()=>{
-    const groupInputPayload: IGroupInputPayload = {
+    const groupInputPayload: GroupInputPayload = {
       name: '',
       description: 'Group for testing',
       userMaxNumber: 1
     }
 
     expect(async ()=>{
-      await userPool.registerGroup(groupInputPayload, consumerAuthKeys.consumerId, {groupFactory})
+      await userPool.registerGroup(groupInputPayload, consumerAuthKeys.consumerId, { groupRepository })
     }).rejects.toThrow()
   })
 
@@ -46,9 +46,9 @@ describe("use case Register Group", ()=>{
       userMaxNumber: 0
     }
 
-    const output1 = await userPool.registerGroup(groupPayload1, consumerAuthKeys.consumerId, {groupFactory})
-    const output2 = await userPool.registerGroup(groupPayload2, consumerAuthKeys.consumerId, {groupFactory})
+    const output1 = await userPool.registerGroup(groupPayload1, consumerAuthKeys.consumerId, { groupRepository })
+    const output2 = await userPool.registerGroup(groupPayload2, consumerAuthKeys.consumerId, { groupRepository })
 
-    expect(output1.id).not.toBe(output2.id)
+    expect(output1.groupId).not.toBe(output2.groupId)
   })
 })

@@ -1,26 +1,30 @@
-import { IConsumerData, IConsumerInputPayload, IConsumerSecrets} from "../interfaces";
+import { ConsumerData, ConsumerSecrets, ConsumerInputPayload } from '../types'
 import { AccessKey } from './AccessKey'
 import { Email } from "./Email";
 import { Origin } from "./Origin";
 import { TextInput } from "./TextInput";
 import { WebError } from "./WebError";
 import { Tokenizer } from "./Tokenizer";
+import { NumberInput } from './NumberInput';
 
 export class Consumer{
-  private accessKey: AccessKey | undefined
-  private email: Email | undefined
-  private origin: Origin | undefined
-  private name: TextInput | undefined
-  private id: TextInput | undefined
   private tokenizer: Tokenizer = new Tokenizer()
+
+  private id: TextInput | undefined
+  private name: TextInput
+  private email: Email
+  private origin: Origin
+  private userMaxNumber: NumberInput
+  private groupMaxNumber: NumberInput
+  private accessKey: AccessKey | undefined
   private secret: TextInput | undefined
 
-  constructor(
-    private payload: IConsumerInputPayload
-  ){
-    this.name = new TextInput(this.payload.name).notBlanck()
-    this.email = new Email(this.payload.email)
-    this.origin = new Origin(this.payload.origin)
+  constructor(payload: ConsumerInputPayload){
+    this.name = new TextInput(payload.name, 'Name').notBlanck()
+    this.email = new Email(payload.email)
+    this.origin = new Origin(payload.origin)
+    this.userMaxNumber = new NumberInput(payload.userMaxNumber ?? 0).positive()
+    this.groupMaxNumber = new NumberInput(payload.groupMaxNumber ?? 0).positive()
   }
 
   auth(accessKey: string): string{
@@ -48,13 +52,13 @@ export class Consumer{
     return this.accessKey?.getValue()
   }
 
-  getData(): IConsumerData{
+  getData(): ConsumerData{
     return {
-      name: this.name?.getValue() || '',
+      name: this.name.getValue(),
       origin: this.origin?.getValue() || [],
-      email: this.email?.getValue() || '',
-      userMaxNumber: this.payload.userMaxNumber,
-      groupMaxNumber: this.payload.groupMaxNumber
+      email: this.email.getValue(),
+      userMaxNumber: this.userMaxNumber.getValue(),
+      groupMaxNumber: this.groupMaxNumber.getValue()
     }
   }
 
@@ -72,7 +76,7 @@ export class Consumer{
     }
   }
 
-  setSecrets(secrets: IConsumerSecrets): void {
+  setSecrets(secrets: ConsumerSecrets): void {
     if(this.isInitialized()) throw new WebError(`Consumer is already initialized. Consumer secrets can not be reseted`, 500)
     this.id = new TextInput(secrets.id).notBlanck()
     this.secret = new TextInput(secrets.secret).notBlanck()

@@ -1,11 +1,12 @@
-import { IConsumerFactory, IConsumersStats } from "../interfaces";
+import { IConsumerRepository } from "../interfaces";
+import { ConsumersStats } from '../types'
 
 type getConsumersStatsOptions = {
-  consumerFactory: IConsumerFactory
+  consumerRepository: IConsumerRepository
 }
 
-export default async function  getConsumersStats(options: getConsumersStatsOptions): Promise<IConsumersStats>{
-  const consumerRepository = options.consumerFactory.createRepository()
+export default async function  getConsumersStats(options: getConsumersStatsOptions): Promise<ConsumersStats>{
+  const consumerRepository = options.consumerRepository
   const consumers = await consumerRepository.getAll()
   const consumersData = consumers.map((consumer)=>{
     return consumer.getData()

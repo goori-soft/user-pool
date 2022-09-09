@@ -1,19 +1,20 @@
 import { Tokenizer } from "../entities/Tokenizer"
-import { IConsumerFactory } from "../interfaces"
+import { WebError } from "../entities/WebError"
+import { IConsumerRepository } from "../interfaces"
 
 type validateConsumerTokenOptions = {
-  consumerFactory: IConsumerFactory
+  consumerRepository: IConsumerRepository
 }
 
 export default async function validateConsumerToken(token: string, options: validateConsumerTokenOptions){
- const consumerRepository = options.consumerFactory.createRepository()
- const tokenizer = new Tokenizer()
- try{
+  const consumerRepository = options.consumerRepository
+  const tokenizer = new Tokenizer()
   const tokenPayload = tokenizer.decode(token)
   const consumer = await consumerRepository.findById(tokenPayload?.id as string)
-  return consumer.verify(token)
- }
- catch(e: any){
-  return false
- }
+  if(consumer.verify(token)){
+    return {
+      consumerId: tokenPayload?.id
+    }
+  }
+  throw new WebError(`Consumer is not authenticated`, 401)
 }

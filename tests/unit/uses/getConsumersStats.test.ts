@@ -1,14 +1,13 @@
-import userPool, { Consumer, IConsumerFactory, IConsumerInputPayload } from "@/userPool"
-import { ConsumerMemoryFactory } from '@/factories'
+import userPool, { Consumer } from "@/userPool"
+import { ConsumerInputPayload } from '@/userPool/types'
+import { MainMemoryFactory } from '@/factories'
 
 describe("Use case get consumers stas", ()=>{
-  let consumerFactory: IConsumerFactory
-
-  beforeAll(()=>{
-    consumerFactory = new ConsumerMemoryFactory()
-  })
+  const mainFactory = new MainMemoryFactory()
+  const consumerRepository = mainFactory.createConsumerRepository()
+  
   it("Should get a empty list of consumers", async ()=>{
-    const consumersStats = await userPool.getConsumersStats({consumerFactory})
+    const consumersStats = await userPool.getConsumersStats({consumerRepository})
     const expectedResponseStructure = {
       total: expect.any(Number),
       active: expect.any(Number),
@@ -22,7 +21,7 @@ describe("Use case get consumers stas", ()=>{
   })
 
   it("Should return one consumer in consumers stats", async ()=>{
-    const consumerInputPayload: IConsumerInputPayload = {
+    const consumerInputPayload: ConsumerInputPayload = {
       name: 'myApp',
       email: 'myapp@myapp.com',
       origin: ['*'],
@@ -30,10 +29,9 @@ describe("Use case get consumers stas", ()=>{
       groupMaxNumber: 0
     }
     const consumer = new Consumer(consumerInputPayload)
-    const consumerRepository = consumerFactory.createRepository()
-    await consumerRepository.save(consumer)
+    await consumerRepository.insert(consumer)
 
-    const consumersStats = await userPool.getConsumersStats({consumerFactory})
+    const consumersStats = await userPool.getConsumersStats({consumerRepository})
     expect(consumersStats.total).toBe(1)
     expect(consumersStats.active).toBe(1)
     expect(consumersStats.inactive).toBe(0)
