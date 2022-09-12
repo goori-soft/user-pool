@@ -7,5 +7,5 @@ dist
 dist/*
 
 .env
-# coverage
-# coverage/*
+coverage
+coverage/*
