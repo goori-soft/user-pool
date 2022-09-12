@@ -1,10 +1,27 @@
 import { MainMemoryFactory } from "@/factories"
 import userPool from "@/userPool"
+import { ConsumerAuthKeys } from "@/userPool/types"
+import { consumerInputPayload } from "../../mocks/consumerInputPayload"
 
 describe("Use case register user", ()=>{
-  const consumerId = '123'
+  let consumerAuthKeys: ConsumerAuthKeys
+  const invalidConsumerId = '123'
   const mainFactory = new MainMemoryFactory()
   const userRepository = mainFactory.createUserRepository()
+  const consumerRepository = mainFactory.createConsumerRepository()
+
+  const options = {
+    userRepository,
+    consumerRepository
+  }
+
+  beforeAll( async ()=>{
+    consumerAuthKeys = await userPool.registerConsumer(consumerInputPayload, { consumerRepository })
+  })
+
+  afterEach( async ()=>{
+    await userRepository.clean()
+  })
 
   it("Should register a new user", async ()=>{
     const userInputPayload = {
@@ -12,11 +29,22 @@ describe("Use case register user", ()=>{
       email: 'john@john.com',
       password: 'john#123'
     }
-    const options = {
-      userRepository
-    }
-    const {userId} = await userPool.registerUser(userInputPayload, consumerId, options)
+
+    const {userId} = await userPool.registerUser(userInputPayload, consumerAuthKeys.consumerId, options)
     expect(typeof userId).toBe('string')
+  })
+
+  it("Should not register a new user in invalid consumer", async ()=>{
+    const userInputPayload = {
+      name: 'Ariel',
+      email: 'ariel@john.com',
+      password: 'john#123'
+    }
+    
+    expect(async ()=>{
+      await userPool.registerUser(userInputPayload, invalidConsumerId, options)
+    }).rejects.toThrow()
+    
   })
 
   it("Shoul not register two users with the same email", async ()=>{
@@ -30,13 +58,10 @@ describe("Use case register user", ()=>{
       email: 'tonny@john.com',
       password: 'brian#123'
     }
-    const options = {
-      userRepository
-    }
 
-    const user1 = await userPool.registerUser(userInputPayload1, consumerId, options)
+    await userPool.registerUser(userInputPayload1, consumerAuthKeys.consumerId, options)
     expect( async ()=>{
-      const user2 = await userPool.registerUser(userInputPayload1, consumerId, options)
+      await userPool.registerUser(userInputPayload2, consumerAuthKeys.consumerId, options)
     }).rejects.toThrow()
   })
 })

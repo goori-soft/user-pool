@@ -33,6 +33,10 @@ export class UserMemoryRepository implements IUserRepository{
     return this.generateUserFromDataRecord(userDataRecord)
   }
 
+  async clean(): Promise<void>{
+    userMemoryDatabase = []
+  }
+
   private generateUserFromDataRecord(userDataRecord: UserDataRecord): User{
     const user = new User(userDataRecord, userDataRecord.createdBy)
     return user

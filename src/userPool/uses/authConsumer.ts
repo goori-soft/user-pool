@@ -1,6 +1,6 @@
 import { IConsumerRepository, IEventBus } from "../interfaces"
 import { ConsumerAuthKeys, Events } from '../types'
-import { WebError } from "../entities/WebError"
+import { WebError, Event } from "../entities"
 
 type authConsumerOptions = {
   consumerRepository: IConsumerRepository,
@@ -15,7 +15,8 @@ export default async function authConsumer(consumerAuthKeys: ConsumerAuthKeys, o
     }
   }
   try{
-    const consumer = await consumerRepository.findById(consumerAuthKeys.consumerId)
+    const consumer = await consumerRepository.getById(consumerAuthKeys.consumerId)
+    if(!consumer) throw new WebError(`Consumer not found`, 404)
     eventBody.consumer = Object.assign(eventBody.consumer, consumer.getData())
     const token = consumer.auth(consumerAuthKeys.accessKey)
     emit(eventBus, Events.CONSUMER_AUTHENTICATED, eventBody)
@@ -29,6 +30,7 @@ export default async function authConsumer(consumerAuthKeys: ConsumerAuthKeys, o
 
 function emit(eventBus: IEventBus | undefined, eventName: string, body: any){
   if(eventBus){
-    eventBus.emit(eventName, body)
+    const event = new Event(eventName, body)
+    eventBus.emit(event)
   }
 }

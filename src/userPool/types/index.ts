@@ -20,5 +20,5 @@ export * from './UserInputPayload'
 export * from './UserOutPutPayload'
 export * from './UserData'
 
-export * from './Event'
+export * from './EventData'
 export * from './Events'

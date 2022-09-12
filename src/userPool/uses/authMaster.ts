@@ -1,4 +1,4 @@
-import { Master, MasterPropNames } from '../entities/Master'
+import { Master, MasterPropNames, Event } from '../entities'
 import { IConfigurationRepository, IEventBus } from '../interfaces'
 import { configurationRepository } from '../defaultImplementaion'
 import { Events } from '../types'
@@ -14,6 +14,7 @@ export default async function authMaster( masterPassword: string, options: authM
   const masterSecret = await configurationRepository.get(MasterPropNames.masterSecret) as string
   const master = new Master(masterAccessKey, masterSecret)
   const token = master.auth(masterPassword)
-  if(eventBus) eventBus.emit(Events.MASTER_AUTHENTICATED, {})
+  const masterAuthenticatedEvent = new Event(Events.MASTER_AUTHENTICATED, {})
+  if(eventBus) eventBus.emit(masterAuthenticatedEvent)
   return token
 }

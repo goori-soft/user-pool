@@ -1,5 +1,5 @@
 import userPool from '@/userPool'
-import { Event } from '@/userPool/types'
+import { EventData } from '@/userPool/types'
 describe("Use case suth master", ()=>{
   const configurationRepository = new userPool.defaultImplementation.ConfigurationRepository()
   const eventBus = new userPool.defaultImplementation.EventBus()
@@ -31,7 +31,7 @@ describe("Use case suth master", ()=>{
       issuedOn: expect.any(String),
       body: {}
     }
-    const handler = (event: Event)=>{
+    const handler = (event: EventData)=>{
       eventReceived = event
     }
 

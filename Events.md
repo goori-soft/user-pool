@@ -137,3 +137,71 @@ Estrutura:
   }
 }
 ```
+
+### Grupo registrado: **GROUP_REGISTERED**
+
+Estrutura:
+
+```ts
+{
+  name: 'GROUP_REGISTERED',
+  identifier: string, // uniq event identifier
+  issuedOn: string, // date string '1985-12-31T14:20:30.15Z'
+  body: {
+    group: {
+      name: string,
+      description?: string,
+      userMaxNumber: number,
+      meta?: [
+        {key: string, value?: number | string}
+      ],
+      consumerId: string
+    }
+  }
+}
+```
+
+### Falha no registro de um grupo: **GROUP_REGISTRATION_FAILED**
+
+Estrutura:
+
+```ts
+{
+  name: 'GROUP_REGISTRATION_FAILED',
+  identifier: string, // uniq event identifier
+  issuedOn: string, // date string '1985-12-31T14:20:30.15Z'
+  body: {
+    reason: string,
+    group: {
+      name: string,
+      description: string,
+      userMaxNumber: number,
+      meta: [
+        {key: string, value?: number | string}
+      ],
+      consumerId: string
+    }
+  }
+}
+```
+
+### Política registrada: **POLICY_REGISTERED**
+
+Estrutura:
+
+```ts
+{
+  name: 'POLICY_REGISTERED',
+  identifier: string, // uniq event identifier
+  issuedOn: string, // date string '1985-12-31T14:20:30.15Z'
+  body: {
+    policy: {
+      id: string,
+      identifier: string,
+      name: string,
+      description?: string,
+      consumerId: string
+    }
+  }
+}
+```

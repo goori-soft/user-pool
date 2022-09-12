@@ -21,7 +21,7 @@ describe("Use case register profile", ()=>{
       name: "myGroup",
       userMaxNumber: 0
     }
-    const group = await userPool.registerGroup(groupInputPayload, consumerAuthKeys.consumerId, { groupRepository } )
+    const group = await userPool.registerGroup(groupInputPayload, consumerAuthKeys.consumerId, { groupRepository, consumerRepository } )
     groupId = group.groupId
 
     const policyInputPayload1 = {
@@ -35,12 +35,12 @@ describe("Use case register profile", ()=>{
       description: 'Enable user to delete something here'
     }
 
-    await userPool.registerPolicy(policyInputPayload1, consumerAuthKeys.consumerId, { policyRepository })
-    await userPool.registerPolicy(policyInputPayload2, consumerAuthKeys.consumerId, { policyRepository })
+    await userPool.registerPolicy(policyInputPayload1, consumerAuthKeys.consumerId, { policyRepository, consumerRepository })
+    await userPool.registerPolicy(policyInputPayload2, consumerAuthKeys.consumerId, { policyRepository, consumerRepository })
 
     const consumerAuthKeys2 = await userPool.registerConsumer(consumerInputPayload2, { consumerRepository })
     consumerId2 = consumerAuthKeys2.consumerId
-    const group2 = await userPool.registerGroup(groupInputPayload, consumerAuthKeys2.consumerId, { groupRepository } )
+    const group2 = await userPool.registerGroup(groupInputPayload, consumerAuthKeys2.consumerId, { groupRepository, consumerRepository } )
     groupId2 = group2.groupId
   })
 

@@ -1,4 +1,4 @@
-import userPool from "@/userPool"
+import userPool, { Event } from "@/userPool"
 
 describe("EventBus implementation", ()=>{
   const eventBus = new userPool.defaultImplementation.EventBus()
@@ -16,7 +16,8 @@ describe("EventBus implementation", ()=>{
     }
 
     eventBus.on('SINGLE_EVENT', handler)
-    eventBus.emit('SINGLE_EVENT', 'simple message')
+    const event = new Event('SINGLE_EVENT', 'simple message')
+    eventBus.emit(event)
 
     expect(eventReceived).toMatchObject(expectedEventReceived)
   })

@@ -3,7 +3,7 @@ import { ConsumerSecrets } from '../types'
 
 export interface IConsumerRepository{
   insert: (consumer: Consumer) => Promise<ConsumerSecrets>
-  findByEmail: (email: string) => Promise<Consumer[]>
-  findById: (id: string) => Promise<Consumer>
+  getByEmail: (email: string) => Promise<Consumer[]>
+  getById: (id: string) => Promise<Consumer | undefined>
   getAll: ()=>Promise<Consumer[]>
 }

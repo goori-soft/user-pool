@@ -17,11 +17,9 @@ describe("User register: POST /api/v1/user/register", ()=>{
   }
   const registerUserEndPoint = '/api/v1/user/register'
   const mainFactory = new MainMemoryFactory()
+  const consumerRepository = mainFactory.createConsumerRepository()
 
   beforeAll( async ()=>{
-    // create a consumer
-    
-    const consumerRepository = mainFactory.createConsumerRepository()
     const consumer = new Consumer(consumerInputPayload)
     const consumerSecrets = await consumerRepository.insert(consumer)
 
@@ -38,7 +36,7 @@ describe("User register: POST /api/v1/user/register", ()=>{
       name: "myGroup",
       userMaxNumber: 0
     }
-    const group = await userPool.registerGroup(groupInputPayload, consumerSecrets.id, { groupRepository })
+    const group = await userPool.registerGroup(groupInputPayload, consumerSecrets.id, { groupRepository, consumerRepository })
     groupId = group.groupId
 
 
@@ -52,8 +50,8 @@ describe("User register: POST /api/v1/user/register", ()=>{
       identifier: "delete",
       name: "Delete"
     }
-    const policy1 = await userPool.registerPolicy(policyInputPayload1, consumerSecrets.id, { policyRepository })
-    const policy2 = await userPool.registerPolicy(policyInputPayload2, consumerSecrets.id, { policyRepository })
+    const policy1 = await userPool.registerPolicy(policyInputPayload1, consumerSecrets.id, { policyRepository, consumerRepository })
+    const policy2 = await userPool.registerPolicy(policyInputPayload2, consumerSecrets.id, { policyRepository, consumerRepository })
     policyId1 = policy1.policyId
     policyId2 = policy2.policyId
 

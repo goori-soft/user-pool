@@ -10,7 +10,8 @@ export default async function validateConsumerToken(token: string, options: vali
   const consumerRepository = options.consumerRepository
   const tokenizer = new Tokenizer()
   const tokenPayload = tokenizer.decode(token)
-  const consumer = await consumerRepository.findById(tokenPayload?.id as string)
+  const consumer = await consumerRepository.getById(tokenPayload?.id as string)
+  if(!consumer) throw new WebError(`Consumer not found`, 404)
   if(consumer.verify(token)){
     return {
       consumerId: tokenPayload?.id

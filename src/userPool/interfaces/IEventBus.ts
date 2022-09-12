@@ -1,8 +1,9 @@
-import {Event} from '../types'
+import { Event } from '../entities'
+import { EventData } from '../types'
 
-export type EventHandler = <MessageType = any>(event: Event<MessageType>) => void
+export type EventHandler = <MessageType = any>(event: EventData<MessageType>) => void
 
 export interface IEventBus {
-  emit(eventName: string, message: any): void | Promise<void>
+  emit(event: Event): void | Promise<void>
   on(eventName: string, handler: EventHandler): void | Promise<void>
 }

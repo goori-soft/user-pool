@@ -4,6 +4,8 @@ import consumerVerifyMiddleware from './consumer.verify.middleware'
 
 export default function(mainFactory: IMainFactory): Router{
   const userRepository = mainFactory.createUserRepository()
+  const consumerRepository = mainFactory.createConsumerRepository()
+
   const router = Router()
 
   router.post('/register', consumerVerifyMiddleware(mainFactory), async (req, res)=>{
@@ -17,7 +19,7 @@ export default function(mainFactory: IMainFactory): Router{
     const consumerId = res.locals.consumerId
 
     try{
-      const {userId} = await userPool.registerUser(userInputPayload, consumerId, {userRepository})
+      const {userId} = await userPool.registerUser(userInputPayload, consumerId, {userRepository, consumerRepository})
       res.status(200).send({
         userId,
         message: 'User has been created'

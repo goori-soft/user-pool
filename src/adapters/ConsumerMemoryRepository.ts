@@ -38,7 +38,7 @@ export class ConsumerMemoryRepository implements IConsumerRepository{
     return secrets
   }
 
-  async findByEmail(email: string): Promise<Consumer[]>{
+  async getByEmail(email: string): Promise<Consumer[]>{
     const result = consumerMemoryDatabase.filter( dataRecord => dataRecord.email === email )
     const consumers = result.map( dataRecord => {
       return this.generateConsumerByDataRecord(dataRecord)
@@ -53,9 +53,9 @@ export class ConsumerMemoryRepository implements IConsumerRepository{
     return consumers
   }
 
-  async findById(id: string): Promise<Consumer>{
+  async getById(id: string): Promise<Consumer | undefined>{
     const consumerDataRecord = consumerMemoryDatabase.find( dataRecord => dataRecord.id === id)
-    if(consumerDataRecord === undefined) throw new WebError(`Consumer not found`, 404)
+    if(consumerDataRecord === undefined) return undefined //throw new WebError(`Consumer not found`, 404)
     return this.generateConsumerByDataRecord(consumerDataRecord)
   }
 

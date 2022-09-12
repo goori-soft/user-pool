@@ -5,6 +5,7 @@ import {Router} from 'express'
 
 export default function(mainFactory: IMainFactory): Router{
   const groupRepository = mainFactory.createGroupRepository()
+  const consumerRepository = mainFactory.createConsumerRepository()
   const router = Router()
 
   router.post('/register', consumerVerifyMiddleware(mainFactory), async (req, res)=>{
@@ -19,7 +20,7 @@ export default function(mainFactory: IMainFactory): Router{
     const { consumerId } = res.locals
 
     try{
-      const { groupId } = await userPool.registerGroup(groupInputPayload, consumerId, { groupRepository })
+      const { groupId } = await userPool.registerGroup(groupInputPayload, consumerId, { groupRepository, consumerRepository })
       res.status(200).send({
         groupId,
         message: 'A new group has been created'

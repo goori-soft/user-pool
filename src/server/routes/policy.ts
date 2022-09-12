@@ -5,6 +5,7 @@ import consumerVerifyMiddleware from './consumer.verify.middleware'
 
 export default function(mainFactory: IMainFactory){
   const policyRepository = mainFactory.createPolicyRepository()
+  const consumerRepository = mainFactory.createConsumerRepository()
   const router = Router()
 
   router.post("/register", consumerVerifyMiddleware(mainFactory), async (req, res)=>{
@@ -12,7 +13,7 @@ export default function(mainFactory: IMainFactory){
     const { consumerId }  = res.locals
     const policyInputPayload = {identifier, name, description} as PolicyInputPayload
     try{
-      const {policyId} = await userPool.registerPolicy(policyInputPayload, consumerId, { policyRepository })
+      const {policyId} = await userPool.registerPolicy(policyInputPayload, consumerId, { policyRepository, consumerRepository })
       res.status(200).send({
         policyId,
         message: `A new policy '${name}' has been created`

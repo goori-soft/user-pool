@@ -9,7 +9,7 @@ type GroupDataRecord = {
   consumerId: string
 }
 
-const groupMemoryDatabase: GroupDataRecord[] = []
+let groupMemoryDatabase: GroupDataRecord[] = []
 
 export class GroupMemoryRepository implements IGroupRepository{
   async insert(group: Group): Promise<string>{
@@ -31,5 +31,9 @@ export class GroupMemoryRepository implements IGroupRepository{
     if(!groupDataRecord) return undefined
     const group = new Group(groupDataRecord, groupDataRecord.consumerId)
     return group
+  }
+
+  async clean(): Promise<void> {
+    groupMemoryDatabase = []
   }
 }
