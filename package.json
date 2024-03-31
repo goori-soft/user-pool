@@ -52,13 +52,5 @@
   },
   "_moduleAliases": {
     "~": "src"
-  },
-  "jest": {
-    "bail": 5,
-    "modulePathIgnorePatterns": [
-      ".data",
-      "node_modules/",
-      "dev/"
-    ]
   }
 }
