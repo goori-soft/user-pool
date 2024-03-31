@@ -12,6 +12,8 @@ Usuário (user) é um registro dentro da coleção principal do serviço.
 
 ## Perfil
 Perfil é um registro dentro do serviço capaz de agrupar usuários e criar vinculos enrte usuários e apps. Um usuário pode possui diversos perfis, mas não é obrigatório para que o serviço funcione. Através de variáveis de amiente é possível alterar o comportamento do serviço para tornar ou não a utilização de perfis algo obrigatório.
+
+
 # Configuração do serviço
 O serviço é altamente configuravel através de variáveis de ambiente. Para saber como configurar cada uma dessas variáveis vá direto a sessão **Variáveis de ambiente**.
 
@@ -20,6 +22,8 @@ Você pode fazer o deploy deste serviço dentro de um ambiente escalável ou nã
 Para inicializar o serviço diretamente dentro de um ambiente com node instalado utilize o comando `npm start` . A maior parte dos serviços de computação em nuvem utilizam este comando por padrão para inicializar o serviço. Neste cenário imagina-se que a base de dados faça parte de um serviço segregado, ou seja, em outro ambiente. Ceritifique-se de que todas as configurações de comunicação com a base de dados estejam corretamente declaradas nas variáveis de ambiente apropriadas.
 
 Para inicializar o serviço de modo containerizado basta utilizar o comando `docker-compose up -d` . Neste caso as variáveis de ambiente precisam ser herdadas do ambiente principal ou injetadas atraves do arquivo `.env`
+
+
 # Uso geral
 A maior parte do serviço é utilizada através de API REST. A seguir você pode ver um exemplo da resposta padrão para as rotas do serviço.
 
