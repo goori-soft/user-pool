@@ -1,9 +1,8 @@
+import z from 'zod';
 import { ApplicationId } from './ApplicationId';
-import { Profile } from './Profile';
+import { applicationValidator } from '../validators/applicationValidator';
 
-export type Application = {
-  profiles: Profile[];
-};
+export type Application = z.infer<typeof applicationValidator>;
 
 export type SavedApplication = {
   id: ApplicationId;
