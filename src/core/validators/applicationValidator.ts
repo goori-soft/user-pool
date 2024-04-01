@@ -6,5 +6,6 @@ export const applicationValidator = z.object({
   description: z.string().optional(),
   url: z.string().url('Application url must be a valid url'),
   email: z.string().email('Application email should be a valid email string'),
-  profiles: profileValidator.optional().array(),
+  profiles: z.string().array().optional(),
+  defaultProfile: z.string().optional(),
 });

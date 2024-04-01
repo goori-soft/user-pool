@@ -1,7 +1,8 @@
-import { GroupRole } from './GroupRole';
-import { Profile } from './Profile';
+import z from 'zod';
+import { userValidator } from '../validators/userValidator';
 
-export type User = {
-  profiles?: Profile[];
-  roles?: GroupRole[];
-};
+export type User = z.infer<typeof userValidator>;
+
+export type SavedUser = {
+  id: string;
+} & User;
