@@ -1,1 +1,3 @@
-export interface PasswordEncoder {}
+export interface PasswordEncoder {
+  hash(password: string): Promise<string>;
+}

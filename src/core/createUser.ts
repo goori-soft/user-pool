@@ -9,16 +9,18 @@ import { Logger } from './interfaces/Logger';
 import { ProfileRepository } from './interfaces/ProfileRepository';
 import { UserRepository } from './interfaces/UserRepository';
 import { userValidator } from './validators/userValidator';
+import { PasswordEncoder } from './interfaces/PasswordEncoder';
 
 export type CreateUserAdapters = {
   logger?: Logger;
   applicationRepository: ApplicationRepository;
   profileRepository: ProfileRepository;
   userRepository: UserRepository;
+  passwordEncoder: PasswordEncoder;
 };
 
 export async function createUser(user: User, applicationId: string, adapters: CreateUserAdapters) {
-  const { logger, applicationRepository, profileRepository, userRepository } = adapters;
+  const { logger, applicationRepository, profileRepository, userRepository, passwordEncoder } = adapters;
 
   const validation = userValidator.safeParse(user);
   if (!validation.success) {
@@ -57,6 +59,9 @@ export async function createUser(user: User, applicationId: string, adapters: Cr
 
   const profilesList = new Set(...(user.profiles ?? []), defaultProfileId);
   user.profiles = [...profilesList];
+
+  if (user.password) user.password = await passwordEncoder.hash(user.password);
+
   try {
     const savedUser = await userRepository.save(user);
     return savedUser;
