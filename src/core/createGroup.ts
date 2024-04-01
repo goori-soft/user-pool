@@ -1,3 +1,4 @@
+import { Group } from './types/Group';
 import { ApplicationNotFound } from './errors/ApplicationNotFound';
 import { CreateGroupError } from './errors/CreateGroupError';
 import { CreateGroupValidationError } from './errors/CreateGroupValidationError';
@@ -6,7 +7,6 @@ import { ApplicationRepository } from './interfaces/ApplicationRepository';
 import { GroupRepository } from './interfaces/GroupRepository';
 import { Logger } from './interfaces/Logger';
 import { UserRepository } from './interfaces/UserRepository';
-import { Group } from './types/Group';
 import { groupValidator } from './validators/groupValidator';
 
 export type CreateGroupAdapters = {
