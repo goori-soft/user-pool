@@ -5,4 +5,5 @@ export interface UserRepository {
   get(id: string): Promise<SavedUser | undefined>;
   getByEmail(email: string): Promise<SavedUser | undefined>;
   remove(id: string): Promise<void>;
+  update(user: SavedUser): Promise<SavedUser>;
 }

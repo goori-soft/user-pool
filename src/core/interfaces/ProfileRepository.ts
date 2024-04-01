@@ -5,4 +5,5 @@ export interface ProfileRepository {
   get(id: string): Promise<SavedProfile | undefined>;
   remove(id: string): Promise<void>;
   removeByIds(ids: string[]): Promise<void>;
+  update(profile: SavedProfile): Promise<SavedProfile>;
 }

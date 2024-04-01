@@ -5,4 +5,5 @@ export interface GroupRepository {
   get(id: string): Promise<SavedGroup | undefined>;
   getByOwner(userId: string): Promise<SavedGroup[]>;
   remove(id: string): Promise<void>;
+  update(group: SavedGroup): Promise<SavedGroup>;
 }
