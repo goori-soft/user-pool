@@ -5,4 +5,5 @@ export interface PasswordEncoder {
   compare(password: string, hash: string): Promise<boolean>;
   tokenize(data: any): Promise<Token>;
   validateToken(token: Token): Promise<boolean>;
+  decodeToken(token: Token): Promise<any>;
 }
