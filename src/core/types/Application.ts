@@ -7,3 +7,7 @@ export type Application = z.infer<typeof applicationValidator>;
 export type SavedApplication = {
   id: ApplicationId;
 } & Application;
+
+export type ApplicationModifier = {
+  id: ApplicationId;
+} & Partial<Pick<Application, 'defaultProfile' | 'description' | 'email' | 'name' | 'url'>>;
