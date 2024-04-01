@@ -30,6 +30,7 @@
     "dotenv": "^16.3.1",
     "lodash": "^4.17.21",
     "module-alias": "^2.2.3",
+    "mongodb": "^6.5.0",
     "uuid": "^9.0.1",
     "zod": "^3.22.4"
   },
@@ -38,6 +39,7 @@
     "@types/eslint": "^8.44.7",
     "@types/jest": "^29.5.8",
     "@types/module-alias": "^2.0.4",
+    "@types/mongodb": "^4.0.7",
     "@types/uuid": "^9.0.7",
     "@typescript-eslint/eslint-plugin": "^6.10.0",
     "@typescript-eslint/parser": "^6.10.0",
