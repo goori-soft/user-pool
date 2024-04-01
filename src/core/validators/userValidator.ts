@@ -5,4 +5,5 @@ export const userValidator = z.object({
   email: z.string().email('User email should be a valid email'),
 
   profiles: z.string().array().optional(),
+  roles: z.string().array().optional(),
 });

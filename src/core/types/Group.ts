@@ -1,9 +1,8 @@
-import { ApplicationId } from './ApplicationId';
-import { User } from './User';
-import { GroupRole } from './GroupRole';
+import z from 'zod';
+import { groupValidator } from '../validators/groupValidator';
 
-export type Group = {
-  application: ApplicationId;
-  owner: User;
-  roles: GroupRole[];
-};
+export type Group = z.infer<typeof groupValidator>;
+
+export type SavedGroup = {
+  id: string;
+} & Group;

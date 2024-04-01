@@ -1,3 +1,4 @@
+import { User } from './types/User';
 import { ApplicationNotFound } from './errors/ApplicationNotFound';
 import { CreateUserError } from './errors/CreateUserError';
 import { CreateUserValidationError } from './errors/CreateUserValidationError';
@@ -7,7 +8,6 @@ import { ApplicationRepository } from './interfaces/ApplicationRepository';
 import { Logger } from './interfaces/Logger';
 import { ProfileRepository } from './interfaces/ProfileRepository';
 import { UserRepository } from './interfaces/UserRepository';
-import { User } from './types/User';
 import { userValidator } from './validators/userValidator';
 
 export type CreateUserAdapters = {
