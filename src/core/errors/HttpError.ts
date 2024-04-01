@@ -5,4 +5,8 @@ export class HttpError extends Error {
   ) {
     super(message);
   }
+
+  toString() {
+    return `[Error] ${this.code}: ${this.message}`;
+  }
 }

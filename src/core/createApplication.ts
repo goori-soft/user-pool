@@ -17,7 +17,14 @@ export async function createApplication(application: Application, adapters: Crea
   if (!validation.success) {
     const originalErrorMessage = validation.error.message;
     const error = new CreateApplicationValidationError(originalErrorMessage);
-    logger?.error(error.message);
+    logger?.error(error);
+    throw error;
+  }
+
+  const existentApplication = await applicationRepository.getByEmail(application.email);
+  if (existentApplication) {
+    const error = new CreateApplicationValidationError('Application email is already in use.');
+    logger?.error(error);
     throw error;
   }
 
@@ -25,9 +32,8 @@ export async function createApplication(application: Application, adapters: Crea
     const savedApplication = applicationRepository.save(application);
     return savedApplication;
   } catch (e: any) {
-    const error = new CreateApplicationError(application.name);
-    const message = error.message;
-    logger?.error(message);
+    const error = new CreateApplicationError(application.name, e.message);
+    logger?.error(error);
     throw error;
   }
 }
