@@ -1,11 +1,11 @@
 import { MongoClient, ObjectId } from 'mongodb';
-import { ProfileRepository } from '~/core/interfaces/ProfileRepository';
+import { GroupRole } from '~/core/types/GroupRole';
 import { MongoDefaultRepository } from './MongoDefaultRepository';
-import { Profile } from '~/core/types/Profile';
+import { GroupRoleRepository } from '~/core/interfaces/GroupRoleRepository';
 
-export class MongoProfileRepository extends MongoDefaultRepository<Profile> implements ProfileRepository {
+export class MongoGroupRoleRepository extends MongoDefaultRepository<GroupRole> implements GroupRoleRepository {
   constructor(client: MongoClient) {
-    super(client, 'profiles');
+    super(client, 'groupRoles');
   }
 
   async removeByIds(ids: string[]): Promise<void> {

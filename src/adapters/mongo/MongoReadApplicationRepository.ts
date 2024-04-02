@@ -1,6 +1,6 @@
-import { MongoClient, Collection, ObjectId } from 'mongodb';
+import { MongoClient } from 'mongodb';
 import { ListOptions, ListResponse, ReadApplicationRepository } from '~/core/interfaces/ReadApplicationRepository';
-import { Application, SavedApplication } from '~/core/types/Application';
+import { Application } from '~/core/types/Application';
 import { MongoDefaultRepository } from './MongoDefaultRepository';
 
 export class MongoReadApplicationRepository

@@ -14,5 +14,5 @@ export type ListResponse = {
 };
 
 export interface ReadGroupRepository {
-  list(options: ListOptions): Promise<ListOptions>;
+  list(options: ListOptions): Promise<ListResponse>;
 }
