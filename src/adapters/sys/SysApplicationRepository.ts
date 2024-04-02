@@ -1,6 +1,6 @@
 import { ApplicationRepository } from '~/core/interfaces/ApplicationRepository';
 import { ReadProfileRepository } from '~/core/interfaces/ReadProfileRepository';
-import { SavedApplication, Application } from '~/core/types/Application';
+import { SavedApplication } from '~/core/types/Application';
 
 export type SysApplicationRepositoryOptions = {
   id: string;
@@ -32,7 +32,7 @@ export class SysApplicationRepository implements ApplicationRepository {
     };
   }
 
-  save(application: Application): Promise<SavedApplication> {
+  save(): Promise<SavedApplication> {
     throw new Error('This method is not allowed when usgin a application enviroment setup');
   }
 
@@ -49,11 +49,11 @@ export class SysApplicationRepository implements ApplicationRepository {
     };
   }
 
-  remove(id: string): Promise<void> {
+  remove(): Promise<void> {
     throw new Error('This method is not allowed when usgin a application enviroment setup');
   }
 
-  update(application: SavedApplication): Promise<SavedApplication> {
+  update(): Promise<SavedApplication> {
     throw new Error('This method is not allowed when usgin a application enviroment setup');
   }
 }
