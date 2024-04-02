@@ -1,7 +1,7 @@
 import { SavedUser } from '../types/User';
 
 export type ListOptions = {
-  applicationId?: string | string[];
+  applicationId?: string;
   profileId?: string | string[];
   groupId?: string | string[];
   groupRoleId?: string | string[];

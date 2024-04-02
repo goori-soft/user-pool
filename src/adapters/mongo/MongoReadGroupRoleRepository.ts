@@ -2,7 +2,6 @@ import { MongoClient } from 'mongodb';
 import { GroupRole } from '~/core/types/GroupRole';
 import { MongoDefaultRepository } from './MongoDefaultRepository';
 import { ListOptions, ListResponse, ReadGroupRoleRepository } from '~/core/interfaces/ReadGroupRoleRepository';
-import { filter } from 'lodash';
 
 export class MongoReadGroupRoleRepository extends MongoDefaultRepository<GroupRole> implements ReadGroupRoleRepository {
   constructor(client: MongoClient) {

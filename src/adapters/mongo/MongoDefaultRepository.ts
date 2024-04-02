@@ -8,6 +8,10 @@ export class MongoDefaultRepository<T extends {}> {
     private collectionName: string,
   ) {}
 
+  public getClient(): MongoClient {
+    return this.client;
+  }
+
   public getCollection(): Collection<T> {
     return this.client.db().collection<T>(this.collectionName);
   }
