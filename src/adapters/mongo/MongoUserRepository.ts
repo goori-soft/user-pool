@@ -1,10 +1,10 @@
-import { MongoClient } from 'mongodb';
+import { Db } from 'mongodb';
 import { UserRepository } from '~/core/interfaces/UserRepository';
 import { MongoDefaultRepository } from './MongoDefaultRepository';
 import { SavedUser, User } from '~/core/types/User';
 
 export class MongoUserRepository extends MongoDefaultRepository<User> implements UserRepository {
-  constructor(client: MongoClient) {
+  constructor(client: Db) {
     super(client, 'users');
   }
 

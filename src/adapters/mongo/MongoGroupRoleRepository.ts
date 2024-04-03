@@ -1,10 +1,10 @@
-import { MongoClient, ObjectId } from 'mongodb';
+import { Db, ObjectId } from 'mongodb';
 import { GroupRole } from '~/core/types/GroupRole';
 import { MongoDefaultRepository } from './MongoDefaultRepository';
 import { GroupRoleRepository } from '~/core/interfaces/GroupRoleRepository';
 
 export class MongoGroupRoleRepository extends MongoDefaultRepository<GroupRole> implements GroupRoleRepository {
-  constructor(client: MongoClient) {
+  constructor(client: Db) {
     super(client, 'groupRoles');
   }
 

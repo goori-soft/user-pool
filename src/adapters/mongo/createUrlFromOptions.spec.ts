@@ -44,7 +44,7 @@ describe('Create url from options', () => {
 
     const url = createUrlFromOptions(options);
 
-    expect(url).toBe('mongodb://john:123@localhost/test');
+    expect(url).toBe('mongodb://john:123@localhost');
   });
 
   it('Should create a url connection', () => {
@@ -58,7 +58,7 @@ describe('Create url from options', () => {
 
     const url = createUrlFromOptions(options);
 
-    expect(url).toBe('mongodb://john:123@localhost:27017/test');
+    expect(url).toBe('mongodb://john:123@localhost:27017');
   });
 
   it('Should create a url connection', () => {
@@ -73,6 +73,6 @@ describe('Create url from options', () => {
 
     const url = createUrlFromOptions(options);
 
-    expect(url).toBe('mongodb+srv://john:123@localhost:27017/test');
+    expect(url).toBe('mongodb+srv://john:123@localhost:27017');
   });
 });

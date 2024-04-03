@@ -1,4 +1,4 @@
-import { MongoClient } from 'mongodb';
+import { Db } from 'mongodb';
 import { ListOptions, ListResponse, ReadApplicationRepository } from '~/core/interfaces/ReadApplicationRepository';
 import { Application } from '~/core/types/Application';
 import { MongoDefaultRepository } from './MongoDefaultRepository';
@@ -7,7 +7,7 @@ export class MongoReadApplicationRepository
   extends MongoDefaultRepository<Application>
   implements ReadApplicationRepository
 {
-  constructor(client: MongoClient) {
+  constructor(client: Db) {
     super(client, 'applications');
   }
 

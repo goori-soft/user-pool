@@ -1,4 +1,4 @@
-import { MongoClient, ObjectId } from 'mongodb';
+import { Db, ObjectId } from 'mongodb';
 import { ListOptions, ListResponse, ReadUserRepository } from '~/core/interfaces/ReadUserRepository';
 import { ApplicationRepository } from '~/core/interfaces/ApplicationRepository';
 import { User } from '~/core/types/User';
@@ -13,7 +13,7 @@ export type MongoReadUserRepositoryAdapters = {
 export class MongoReadUserRepository extends MongoDefaultRepository<User> implements ReadUserRepository {
   private applicationRepository: ApplicationRepository;
 
-  constructor(client: MongoClient, adapters: MongoReadUserRepositoryAdapters) {
+  constructor(client: Db, adapters: MongoReadUserRepositoryAdapters) {
     super(client, 'users');
     this.applicationRepository = adapters.applicationRepository;
   }
@@ -30,7 +30,7 @@ export class MongoReadUserRepository extends MongoDefaultRepository<User> implem
 
     if (groupId) {
       const client = this.getClient();
-      const groupCollection = client.db().collection<Group>('groups');
+      const groupCollection = client.collection<Group>('groups');
       const groupIds = toArray(groupId) as string[];
       const _groupIds = groupIds.map((id) => new ObjectId(id));
       const groups = await groupCollection.find({ _id: { $in: _groupIds } }).toArray();

@@ -1,10 +1,10 @@
-import { MongoClient } from 'mongodb';
+import { Db } from 'mongodb';
 import { ListOptions, ListResponse, ReadProfileRepository } from '~/core/interfaces/ReadProfileRepository';
 import { MongoDefaultRepository } from './MongoDefaultRepository';
 import { Profile } from '~/core/types/Profile';
 
 export class MongoReadProfileRepository extends MongoDefaultRepository<Profile> implements ReadProfileRepository {
-  constructor(client: MongoClient) {
+  constructor(client: Db) {
     super(client, 'profiles');
   }
 

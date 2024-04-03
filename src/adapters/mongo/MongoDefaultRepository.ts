@@ -1,19 +1,19 @@
-import { MongoClient, Collection, ObjectId, OptionalUnlessRequiredId, WithId } from 'mongodb';
+import { MongoClient, Db, Collection, ObjectId, OptionalUnlessRequiredId, WithId } from 'mongodb';
 
 type Saved<T extends {}> = T & { id: string };
 
 export class MongoDefaultRepository<T extends {}> {
   constructor(
-    private readonly client: MongoClient,
+    private readonly client: Db,
     private collectionName: string,
   ) {}
 
-  public getClient(): MongoClient {
+  public getClient(): Db {
     return this.client;
   }
 
   public getCollection(): Collection<T> {
-    return this.client.db().collection<T>(this.collectionName);
+    return this.client.collection<T>(this.collectionName);
   }
 
   async get(id: string): Promise<Saved<T> | undefined> {

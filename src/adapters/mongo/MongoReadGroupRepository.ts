@@ -1,10 +1,10 @@
-import { MongoClient } from 'mongodb';
+import { Db } from 'mongodb';
 import { ListOptions, ListResponse, ReadGroupRepository } from '~/core/interfaces/ReadGroupRepository';
 import { Group } from '~/core/types/Group';
 import { MongoDefaultRepository } from './MongoDefaultRepository';
 
 export class MongoReadGroupRepository extends MongoDefaultRepository<Group> implements ReadGroupRepository {
-  constructor(client: MongoClient) {
+  constructor(client: Db) {
     super(client, 'groups');
   }
 

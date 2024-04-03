@@ -1,10 +1,10 @@
-import { MongoClient, ObjectId } from 'mongodb';
+import { Db } from 'mongodb';
 import { ApplicationRepository } from '~/core/interfaces/ApplicationRepository';
 import { SavedApplication, Application } from '~/core/types/Application';
 import { MongoDefaultRepository } from './MongoDefaultRepository';
 
 export class MongoApplicationRepository extends MongoDefaultRepository<Application> implements ApplicationRepository {
-  constructor(client: MongoClient) {
+  constructor(client: Db) {
     super(client, 'applications');
   }
 
